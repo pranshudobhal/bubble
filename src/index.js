@@ -7,6 +7,11 @@ import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter as Router } from 'react-router-dom';
 
+import './api/server';
+import { fetchUsers } from './features/users/usersSlice';
+
+store.dispatch(fetchUsers());
+
 ReactDOM.render(
   <React.StrictMode>
     <Router>

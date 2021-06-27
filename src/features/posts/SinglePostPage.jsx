@@ -1,11 +1,12 @@
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router';
+import { selectPostByID } from './postsSlice';
 import { ReactionButtons } from './ReactionButtons';
 
 export const SinglePostPage = () => {
   const { postID } = useParams();
 
-  const post = useSelector((state) => state.posts.find((post) => post.id === postID));
+  const post = useSelector((state) => selectPostByID(state, postID));
 
   if (!post) {
     return (

@@ -1,6 +1,11 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { postAdded } from './postsSlice';
+import { addNewPost } from './postsSlice';
+
+/**
+ * TODO:
+ * - Handle disable submit when one API request has been sent already
+ */
 
 export const NewPost = () => {
   const [content, setContent] = useState('');
@@ -11,10 +16,9 @@ export const NewPost = () => {
 
   const onNewPostClicked = () => {
     //UserID will come from the user who is logged in
-    const userID = '1';
+    const userID = 'e0_ush9VLcr8lerT38Jnw';
     if (content !== '') {
-      console.log(userID);
-      dispatch(postAdded(content, userID));
+      dispatch(addNewPost({ content, userID }));
 
       setContent('');
     }
