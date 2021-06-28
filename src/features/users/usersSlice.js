@@ -12,6 +12,10 @@ export const fetchUsers = createAsyncThunk('users/fetchUsers', async () => {
   }
 });
 
+export const selectAllUsers = (state) => state.users;
+
+export const selectUserByID = (state, userID) => state.users.find((user) => user.id === userID);
+
 const usersSlice = createSlice({
   name: 'users',
   initialState,

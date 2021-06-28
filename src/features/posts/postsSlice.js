@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, nanoid } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSelector, createSlice, nanoid } from '@reduxjs/toolkit';
 import { client } from '../../api/client';
 
 const initialState = {
@@ -7,7 +7,7 @@ const initialState = {
   error: null,
 };
 
-export const selectAllPosts = (state) => state.posts;
+export const selectAllPosts = (state) => state.posts.posts;
 
 export const selectPostByID = (state, postID) => state.posts.posts.find((post) => post.id === postID);
 
@@ -28,6 +28,8 @@ export const addNewPost = createAsyncThunk('posts/addNewPost', async (newPost) =
     console.log(error);
   }
 });
+
+export const selectPostByUser = createSelector([selectAllPosts, (state, userID) => userID], (posts, userID) => posts.filter((post) => post.user === userID));
 
 const postSlice = createSlice({
   name: 'posts',

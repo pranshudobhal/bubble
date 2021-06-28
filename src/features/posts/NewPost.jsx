@@ -16,7 +16,11 @@ export const NewPost = () => {
 
   const onNewPostClicked = () => {
     //UserID will come from the user who is logged in
-    const userID = 'e0_ush9VLcr8lerT38Jnw';
+    /**
+     * FIXME:
+     * userID will change so will give ID of undefined error
+     */
+    const userID = 'UMhDXm_3IWFRMin4YMtSG';
     if (content !== '') {
       dispatch(addNewPost({ content, userID }));
 

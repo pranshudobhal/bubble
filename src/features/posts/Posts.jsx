@@ -26,7 +26,7 @@ export const Posts = () => {
    * 1. Once new posts with date are added, remove ? after date
    */
 
-  const orderedPosts = [...posts.posts]?.sort((a, b) => b.date?.localeCompare(a.date));
+  const orderedPosts = [...posts]?.sort((a, b) => b.date?.localeCompare(a.date));
 
   return (
     <div>
