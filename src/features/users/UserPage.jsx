@@ -1,9 +1,9 @@
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router';
-import { Link } from 'react-router-dom';
 
 import { selectUserByID } from './usersSlice';
 import { selectPostByUser } from '../posts/postsSlice';
+import { PostCard } from '../posts/PostCard';
 
 export const UserPage = () => {
   const { userID } = useParams();
@@ -12,16 +12,17 @@ export const UserPage = () => {
 
   const postByUser = useSelector((state) => selectPostByUser(state, userID));
 
+  const orderedPosts = [...postByUser]?.sort((a, b) => b.date?.localeCompare(a.date));
+
   return (
-    <section>
+    <section className="mt-10 w-6/7 mx-auto md:w-5/7 lg:w-4/7 xl:w-3/7">
+      <div className="">
+        <img src="https://unsplash.it/400/400" className="rounded-full h-32 w-32 object-cover object-center" alt="userimage" />
+      </div>
       <h2>{user.name}</h2>
-      <ul>
-        {postByUser?.map((post) => (
-          <li key={post.id}>
-            <Link to={`/posts/${post.id}`}>{post.content}</Link>
-          </li>
-        ))}
-      </ul>
+      {orderedPosts?.map((post) => (
+        <PostCard key={post.id} post={post} />
+      ))}
     </section>
   );
 };

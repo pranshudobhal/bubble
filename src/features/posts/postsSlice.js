@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSelector, createSlice, nanoid } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSelector, createSlice } from '@reduxjs/toolkit';
 import { client } from '../../api/client';
 
 const initialState = {

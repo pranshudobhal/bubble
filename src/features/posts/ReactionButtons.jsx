@@ -16,5 +16,9 @@ export const ReactionButtons = ({ post }) => {
     );
   });
 
-  return <div>{reactionButtons}</div>;
+  return (
+    <div onClick={(e) => e.stopPropagation()} className="w-max">
+      {reactionButtons}
+    </div>
+  );
 };

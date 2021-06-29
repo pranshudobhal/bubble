@@ -1,8 +1,13 @@
 import React from 'react';
 import './App.css';
 import { Navbar, Home, SinglePostPage, UserList, UserPage } from './features';
-import { Routes, Route } from 'react-router-dom';
+import { Routes } from 'react-router-dom';
 import { PrivateRoute } from './features/authentication/PrivateRoute';
+
+/**
+ * TODO:
+ * - change userID to User Name in userpage
+ */
 
 function App() {
   return (
@@ -13,6 +18,7 @@ function App() {
         <PrivateRoute path="/posts/:postID" element={<SinglePostPage />} />
 
         <PrivateRoute path="/profile" element={<UserList />} />
+
         <PrivateRoute path="/profile/:userID" element={<UserPage />} />
 
         {/* <Route path="/profile" element={<Profile />} /> */}

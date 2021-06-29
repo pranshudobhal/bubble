@@ -20,7 +20,7 @@ export const NewPost = () => {
      * FIXME:
      * userID will change so will give ID of undefined error
      */
-    const userID = 'UMhDXm_3IWFRMin4YMtSG';
+    const userID = 'cHLFomHWQk9XXGv4SPZm9';
     if (content !== '') {
       dispatch(addNewPost({ content, userID }));
 
@@ -29,12 +29,10 @@ export const NewPost = () => {
   };
 
   return (
-    <section>
-      <h2>Add a New Post</h2>
-      <form>
-        <label htmlFor="postContent">Content:</label>
-        <textarea id="postContent" name="postContent" value={content} onChange={onContentChanged} />
-        <button type="button" onClick={onNewPostClicked}>
+    <section className="border border-gray-200 rounded-xl p-4 shadow-sm">
+      <form className="flex flex-col">
+        <textarea className="h-20 mb-2" id="postContent" name="postContent" placeholder="What's happening?" value={content} onChange={onContentChanged} />
+        <button type="button" className="bg-blue-500 text-white rounded-full w-max py-2 px-6 mt-1 self-end" onClick={onNewPostClicked}>
           New Post
         </button>
       </form>

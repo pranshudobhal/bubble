@@ -1,10 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { PostAuthor } from './PostAuthor';
+import { PostCard } from './PostCard';
 import { fetchPosts, selectAllPosts } from './postsSlice';
-import { ReactionButtons } from './ReactionButtons';
-import { TimeAgo } from './TimeAgo';
 
 export const Posts = () => {
   const posts = useSelector(selectAllPosts);
@@ -29,25 +26,10 @@ export const Posts = () => {
   const orderedPosts = [...posts]?.sort((a, b) => b.date?.localeCompare(a.date));
 
   return (
-    <div>
-      <h2>Posts</h2>
+    <section className="mt-10">
       {postStatus === 'loading' && <div>Loading posts...</div>}
       {postStatus === 'error' && <div>Some error occurred! Please retry!</div>}
-      {postStatus === 'fulfilled' &&
-        (orderedPosts.length !== 0 ? (
-          orderedPosts.map((post) => (
-            <div key={post.id}>
-              <Link to={`/posts/${post.id}`}>
-                <p>{post.content}</p>
-                <PostAuthor userID={post.user} />
-                <TimeAgo timestamp={post.date} />
-              </Link>
-              <ReactionButtons post={post} />
-            </div>
-          ))
-        ) : (
-          <div>No posts yet</div>
-        ))}
-    </div>
+      {postStatus === 'fulfilled' && (orderedPosts.length !== 0 ? orderedPosts.map((post) => <PostCard key={post.id} post={post} />) : <div>No posts yet</div>)}
+    </section>
   );
 };

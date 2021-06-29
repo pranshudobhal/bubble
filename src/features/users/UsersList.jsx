@@ -7,7 +7,7 @@ export const UserList = () => {
   const users = useSelector(selectAllUsers);
 
   return (
-    <section>
+    <section className="mt-10 w-6/7 mx-auto md:w-5/7 lg:w-4/7 xl:w-3/7">
       <h2>Users</h2>
       <ul>
         {users.map((user) => (

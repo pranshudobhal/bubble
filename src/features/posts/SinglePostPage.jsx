@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router';
+import { PostCard } from './PostCard';
 import { selectPostByID } from './postsSlice';
-import { ReactionButtons } from './ReactionButtons';
 
 export const SinglePostPage = () => {
   const { postID } = useParams();
@@ -17,11 +17,8 @@ export const SinglePostPage = () => {
   }
 
   return (
-    <section>
-      <article className="post">
-        <p className="post-content">{post.content}</p>
-        <ReactionButtons post={post} />
-      </article>
+    <section className="mt-10 w-6/7 mx-auto md:w-5/7 lg:w-4/7 xl:w-3/7">
+      <PostCard post={post} />
     </section>
   );
 };
