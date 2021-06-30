@@ -13,7 +13,7 @@ export const PostCard = ({ post }) => {
   const navigate = useNavigate();
 
   return (
-    <div className="cursor-pointer border border-gray-200 rounded-xl p-8 mb-6 shadow-sm" onClick={() => navigate(`/posts/${post.id}`)}>
+    <div className="bg-white cursor-pointer border border-gray-200 rounded-xl p-8 mb-6 shadow-md" onClick={() => navigate(`/posts/${post.id}`)}>
       <div className="flex flex-col">
         <div className="flex justify-between items-start" onClick={(e) => e.stopPropagation()}>
           <div className="self-start">

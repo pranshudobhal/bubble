@@ -29,10 +29,10 @@ export const NewPost = () => {
   };
 
   return (
-    <section className="border border-gray-200 rounded-xl p-4 shadow-sm">
+    <section className="border border-gray-200 rounded-xl p-6 shadow-md bg-white">
       <form className="flex flex-col">
-        <textarea className="h-20 mb-2" id="postContent" name="postContent" placeholder="What's happening?" value={content} onChange={onContentChanged} />
-        <button type="button" className="bg-blue-500 text-white rounded-full w-max py-2 px-6 mt-1 self-end" onClick={onNewPostClicked}>
+        <textarea className="h-20 mb-2 border-0 rounded resize-none" id="postContent" name="postContent" placeholder="What's happening?" value={content} onChange={onContentChanged} />
+        <button type="button" className="bg-blue-500 text-white rounded-full w-max py-2 px-6 mt-2 self-end" onClick={onNewPostClicked}>
           New Post
         </button>
       </form>

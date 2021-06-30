@@ -17,8 +17,10 @@ export const SinglePostPage = () => {
   }
 
   return (
-    <section className="mt-10 w-6/7 mx-auto md:w-5/7 lg:w-4/7 xl:w-3/7">
-      <PostCard post={post} />
-    </section>
+    <div className="pt-10 overflow-y-auto">
+      <section className="w-6/7 mx-auto md:w-5/7 lg:w-4/7 xl:w-3/7">
+        <PostCard post={post} />
+      </section>
+    </div>
   );
 };

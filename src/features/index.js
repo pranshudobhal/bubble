@@ -4,5 +4,5 @@ export { SinglePostPage } from './posts/SinglePostPage';
 export { PrivateRoute } from './authentication/PrivateRoute';
 export { UserList } from './users/UsersList';
 export { UserPage } from './users/UserPage';
-// export { Login } from './authentication/login';
-// export { SignUp } from './authentication/signup';
+export { Login } from './authentication/Login';
+export { SignUp } from './authentication/SignUp';
