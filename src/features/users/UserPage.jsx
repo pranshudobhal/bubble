@@ -6,11 +6,11 @@ import { selectPostByUser } from '../posts/postsSlice';
 import { PostCard } from '../posts/PostCard';
 
 export const UserPage = () => {
-  const { userID } = useParams();
+  const { username } = useParams();
 
-  const user = useSelector((state) => selectUserByID(state, userID));
+  const user = useSelector((state) => selectUserByID(state, username));
 
-  const postByUser = useSelector((state) => selectPostByUser(state, userID));
+  const postByUser = useSelector((state) => selectPostByUser(state, username));
 
   const orderedPosts = [...postByUser]?.sort((a, b) => b.date?.localeCompare(a.date));
 

@@ -1,15 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import axios from 'axios';
 import { loginService, signUpService } from '../../services/authentication';
-
-/**
- * FIXME:
- * - change token later on
- */
 
 export const loginUser = createAsyncThunk('authentication/loginUser', async (userDetails) => {
   try {
     const response = await loginService(userDetails);
-    return response;
+    return { token: response.data.token };
   } catch (error) {
     console.log('Error logging in ', error);
   }
@@ -18,7 +14,7 @@ export const loginUser = createAsyncThunk('authentication/loginUser', async (use
 export const signUpUser = createAsyncThunk('authentication/signUpUser', async (userDetails) => {
   try {
     const response = await signUpService(userDetails);
-    return response;
+    return { token: response.data.token };
   } catch (error) {
     console.log('Error creating account ', error);
   }
@@ -26,8 +22,7 @@ export const signUpUser = createAsyncThunk('authentication/signUpUser', async (u
 
 const initialState = {
   user: null,
-  // token: JSON.parse(localStorage?.getItem('token')) || null,
-  token: false,
+  token: JSON.parse(localStorage.getItem('token')) || null,
   status: 'idle',
   error: null,
 };
@@ -36,7 +31,7 @@ export const authenticationSlice = createSlice({
   name: 'authentication',
   initialState,
   reducers: {
-    logoutUser: (state) => {
+    logoutUser: () => {
       localStorage.removeItem('token');
       return {
         user: null,
@@ -55,7 +50,11 @@ export const authenticationSlice = createSlice({
       state.status = 'loading';
     },
     [loginUser.fulfilled]: (state, action) => {
+      const { token } = action.payload;
+      state.token = token;
       state.status = 'fulfilled';
+      localStorage.setItem('token', JSON.stringify(token));
+      axios.defaults.headers.common['Authorization'] = token;
     },
     [loginUser.rejected]: (state, action) => {
       state.error = action.error.message;
@@ -65,7 +64,11 @@ export const authenticationSlice = createSlice({
       state.status = 'loading';
     },
     [signUpUser.fulfilled]: (state, action) => {
+      const { token } = action.payload;
+      state.token = token;
       state.status = 'fulfilled';
+      localStorage.setItem('token', JSON.stringify(token));
+      axios.defaults.headers.common['Authorization'] = token;
     },
     [signUpUser.rejected]: (state, action) => {
       state.error = action.error.message;
@@ -74,6 +77,6 @@ export const authenticationSlice = createSlice({
   },
 });
 
-export const { resetAuthStateStatus } = authenticationSlice.actions;
+export const { logoutUser, resetAuthStateStatus } = authenticationSlice.actions;
 
 export default authenticationSlice.reducer;

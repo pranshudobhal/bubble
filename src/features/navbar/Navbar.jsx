@@ -1,9 +1,16 @@
 import { useNavigate } from 'react-router-dom';
-import { SearchIcon, BellIcon } from '@heroicons/react/outline';
+import { SearchIcon, BellIcon, LogoutIcon } from '@heroicons/react/outline';
 import { UserCircleIcon } from '@heroicons/react/solid';
+import { useDispatch } from 'react-redux';
+import { logoutUser } from '../authentication/authenticationSlice';
 
 export const Navbar = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const logoutHandler = () => {
+    dispatch(logoutUser());
+  };
 
   return (
     <nav className="py-2 h-16">
@@ -17,6 +24,7 @@ export const Navbar = () => {
           <SearchIcon className="h-6 w-6 text-gray-500 cursor-pointer" />
           <BellIcon className="h-6 w-6 text-gray-500 cursor-pointer" />
           <UserCircleIcon className="h-10 w-10 text-gray-500 cursor-pointer" onClick={() => navigate('/profile')} />
+          <LogoutIcon className="h-10 w-10 text-gray-500 cursor-pointer" onClick={logoutHandler} />
         </div>
       </div>
     </nav>

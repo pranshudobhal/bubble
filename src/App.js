@@ -22,7 +22,7 @@ function App() {
         <PrivateRoute path="/" element={<Home />} />
         <PrivateRoute path="/posts/:postID" element={<SinglePostPage />} />
         <PrivateRoute path="/profile" element={<UserList />} />
-        <PrivateRoute path="/profile/:userID" element={<UserPage />} />
+        <PrivateRoute path="/:username" element={<UserPage />} />
 
         {/* <Route path="/profile" element={<Profile />} /> */}
       </Routes>
