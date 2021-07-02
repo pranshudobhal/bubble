@@ -3,21 +3,13 @@ import axios from 'axios';
 import { loginService, signUpService } from '../../services/authentication';
 
 export const loginUser = createAsyncThunk('authentication/loginUser', async (userDetails) => {
-  try {
-    const response = await loginService(userDetails);
-    return { token: response.data.token };
-  } catch (error) {
-    console.log('Error logging in ', error);
-  }
+  const response = await loginService(userDetails);
+  return { token: response.data.token };
 });
 
 export const signUpUser = createAsyncThunk('authentication/signUpUser', async (userDetails) => {
-  try {
-    const response = await signUpService(userDetails);
-    return { token: response.data.token };
-  } catch (error) {
-    console.log('Error creating account ', error);
-  }
+  const response = await signUpService(userDetails);
+  return { token: response.data.token };
 });
 
 const initialState = {

@@ -27,9 +27,9 @@ export const Posts = () => {
 
   return (
     <section className="mt-10">
-      {postStatus !== 'loading' && <div>Loading posts...</div>}
-      {postStatus !== 'error' && <div>Some error occurred! Please retry!</div>}
-      {postStatus !== 'fulfilled' && (orderedPosts.length !== 0 ? orderedPosts.map((post) => <PostCard key={post.id} post={post} />) : <div>No posts yet</div>)}
+      {postStatus === 'loading' && <div>Loading posts...</div>}
+      {postStatus === 'error' && <div>Some error occurred! Please retry!</div>}
+      {postStatus === 'fulfilled' && (orderedPosts.length !== 0 && orderedPosts[0] !== undefined ? orderedPosts.map((post) => <PostCard key={post.id} post={post} />) : <div>No posts yet</div>)}
     </section>
   );
 };

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addNewPost } from './postsSlice';
+import { createNewPost } from './postsSlice';
 
 /**
  * TODO:
@@ -22,7 +22,7 @@ export const NewPost = () => {
      */
     const userID = 'cHLFomHWQk9XXGv4SPZm9';
     if (content !== '') {
-      dispatch(addNewPost({ content, userID }));
+      dispatch(createNewPost({ content, userID }));
 
       setContent('');
     }

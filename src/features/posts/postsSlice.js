@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSelector, createSlice } from '@reduxjs/toolkit';
-import { client } from '../../api/client';
+import { getAllPosts } from '../../services/posts/Posts.services';
 
 const initialState = {
   posts: [],
@@ -12,21 +12,17 @@ export const selectAllPosts = (state) => state.posts.posts;
 export const selectPostByID = (state, postID) => state.posts.posts.find((post) => post.id === postID);
 
 export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
-  try {
-    const response = await client.get('/fakeApi/posts');
-    return response.posts;
-  } catch (error) {
-    console.log(error);
-  }
+  const response = await getAllPosts();
+  console.log({ response });
+  return response.posts;
 });
 
-export const addNewPost = createAsyncThunk('posts/addNewPost', async (newPost) => {
-  try {
-    const response = await client.post('/fakeApi/posts', { post: newPost });
-    return response.post;
-  } catch (error) {
-    console.log(error);
-  }
+export const createNewPost = createAsyncThunk('posts/createNewPost', async (newPost) => {
+  console.log({ newPost });
+  const response = await createNewPost(newPost);
+  console.log({ response });
+
+  return response.post;
 });
 
 export const selectPostByUser = createSelector([selectAllPosts, (state, userID) => userID], (posts, userID) => posts.filter((post) => post.user === userID));
@@ -61,11 +57,19 @@ const postSlice = createSlice({
       state.posts = state.posts.concat(action.payload);
     },
     [fetchPosts.rejected]: (state, action) => {
-      state.error = action.error.message;
       state.status = 'error';
+      state.error = action.error.message;
     },
-    [addNewPost.fulfilled]: (state, action) => {
+    [createNewPost.pending]: (state, action) => {
+      state.status = 'loading';
+    },
+    [createNewPost.fulfilled]: (state, action) => {
+      state.status = 'fulfilled';
       state.posts.push(action.payload);
+    },
+    [createNewPost.rejected]: (state, action) => {
+      state.status = 'error';
+      state.error = action.error.message;
     },
   },
 });

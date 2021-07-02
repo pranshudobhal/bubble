@@ -1,2 +1,2 @@
-export { loginService } from './LoginService';
-export { signUpService } from './SignUpService';
+export { loginService } from './Login.services';
+export { signUpService } from './SignUp.services';
