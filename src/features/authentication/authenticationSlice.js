@@ -4,16 +4,16 @@ import { loginService, signUpService } from '../../services/authentication';
 
 export const loginUser = createAsyncThunk('authentication/loginUser', async (userDetails) => {
   const response = await loginService(userDetails);
-  return { token: response.data.token };
+  return { token: response.data.token, user: response.data.userData };
 });
 
 export const signUpUser = createAsyncThunk('authentication/signUpUser', async (userDetails) => {
   const response = await signUpService(userDetails);
-  return { token: response.data.token };
+  return { token: response.data.token, user: response.data.userData };
 });
 
 const initialState = {
-  user: null,
+  user: JSON.parse(localStorage.getItem('user')) || null,
   token: JSON.parse(localStorage.getItem('token')) || null,
   status: 'idle',
   error: null,
@@ -25,6 +25,7 @@ export const authenticationSlice = createSlice({
   reducers: {
     logoutUser: () => {
       localStorage.removeItem('token');
+      localStorage.removeItem('user');
       return {
         user: null,
         token: null,
@@ -42,10 +43,12 @@ export const authenticationSlice = createSlice({
       state.status = 'loading';
     },
     [loginUser.fulfilled]: (state, action) => {
-      const { token } = action.payload;
+      const { token, user } = action.payload;
       state.token = token;
+      state.user = user;
       state.status = 'fulfilled';
       localStorage.setItem('token', JSON.stringify(token));
+      localStorage.setItem('user', JSON.stringify(user));
       axios.defaults.headers.common['Authorization'] = token;
     },
     [loginUser.rejected]: (state, action) => {
@@ -56,10 +59,12 @@ export const authenticationSlice = createSlice({
       state.status = 'loading';
     },
     [signUpUser.fulfilled]: (state, action) => {
-      const { token } = action.payload;
+      const { token, user } = action.payload;
       state.token = token;
+      state.user = user;
       state.status = 'fulfilled';
       localStorage.setItem('token', JSON.stringify(token));
+      localStorage.setItem('user', JSON.stringify(user));
       axios.defaults.headers.common['Authorization'] = token;
     },
     [signUpUser.rejected]: (state, action) => {

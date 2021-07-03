@@ -25,7 +25,10 @@ export const createNewPost = createAsyncThunk('posts/createNewPost', async (newP
   return response.post;
 });
 
-export const selectPostByUser = createSelector([selectAllPosts, (state, userID) => userID], (posts, userID) => posts.filter((post) => post.user === userID));
+/**
+ * The below was done for optimization, that it will only run when posts change
+ */
+// export const selectPostByUser = createSelector([selectAllPosts, (state, userID) => userID], (posts, userID) => posts.filter((post) => post.user === userID));
 
 const postSlice = createSlice({
   name: 'posts',
