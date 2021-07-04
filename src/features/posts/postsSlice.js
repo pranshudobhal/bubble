@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSelector, createSlice } from '@reduxjs/toolkit';
-import { getAllPosts } from '../../services/posts/Posts.services';
+import { createNewPost, getAllPosts } from '../../services/posts/Posts.services';
 
 const initialState = {
   posts: [],
@@ -9,26 +9,25 @@ const initialState = {
 
 export const selectAllPosts = (state) => state.posts.posts;
 
-export const selectPostByID = (state, postID) => state.posts.posts.find((post) => post.id === postID);
+export const selectPostByID = (state, postID) => state.posts.posts.find((post) => post._id === postID);
 
 export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
   const response = await getAllPosts();
-  console.log({ response });
-  return response.posts;
+  if (response.data.success === false) {
+    throw new Error(response.data.message);
+  }
+  return response.data.allPosts;
 });
 
-export const createNewPost = createAsyncThunk('posts/createNewPost', async (newPost) => {
-  console.log({ newPost });
+export const addNewPost = createAsyncThunk('posts/addNewPost', async (newPost) => {
   const response = await createNewPost(newPost);
-  console.log({ response });
-
-  return response.post;
+  if (response.data.success === false) {
+    throw new Error(response.data.message);
+  }
+  return response.data.newPostData;
 });
 
-/**
- * The below was done for optimization, that it will only run when posts change
- */
-// export const selectPostByUser = createSelector([selectAllPosts, (state, userID) => userID], (posts, userID) => posts.filter((post) => post.user === userID));
+export const selectPostByUser = createSelector([selectAllPosts, (state, username) => username], (posts, username) => posts.filter((post) => post.userID.username === username));
 
 const postSlice = createSlice({
   name: 'posts',
@@ -54,6 +53,7 @@ const postSlice = createSlice({
   extraReducers: {
     [fetchPosts.pending]: (state) => {
       state.status = 'loading';
+      state.error = null;
     },
     [fetchPosts.fulfilled]: (state, action) => {
       state.status = 'fulfilled';
@@ -63,14 +63,15 @@ const postSlice = createSlice({
       state.status = 'error';
       state.error = action.error.message;
     },
-    [createNewPost.pending]: (state, action) => {
+    [addNewPost.pending]: (state, action) => {
       state.status = 'loading';
+      state.error = null;
     },
-    [createNewPost.fulfilled]: (state, action) => {
+    [addNewPost.fulfilled]: (state, action) => {
       state.status = 'fulfilled';
       state.posts.push(action.payload);
     },
-    [createNewPost.rejected]: (state, action) => {
+    [addNewPost.rejected]: (state, action) => {
       state.status = 'error';
       state.error = action.error.message;
     },

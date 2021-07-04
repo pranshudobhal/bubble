@@ -10,8 +10,8 @@ export const ReactionButtons = ({ post }) => {
 
   const reactionButtons = Object.entries(reactionEmoji).map(([name, emoji]) => {
     return (
-      <button key={name} type="button" onClick={() => dispatch(reactionAdded({ postID: post.id, reaction: name }))}>
-        {emoji} {post.reactions[name]}
+      <button key={name} type="button" onClick={() => dispatch(reactionAdded({ postID: post._id, reaction: name }))}>
+        {emoji} {post?.reactions[name]}
       </button>
     );
   });

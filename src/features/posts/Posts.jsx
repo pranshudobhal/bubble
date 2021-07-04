@@ -1,35 +1,18 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { PostCard } from './PostCard';
-import { fetchPosts, selectAllPosts } from './postsSlice';
+import { selectAllPosts } from './postsSlice';
 
 export const Posts = () => {
   const posts = useSelector(selectAllPosts);
-  const dispatch = useDispatch();
-  /**
-   * TODO:
-   * - Can merge with posts as { post, status, error}
-   */
-  const postStatus = useSelector((state) => state.posts.status);
+  const { status, error } = useSelector((state) => state.posts);
 
-  useEffect(() => {
-    if (postStatus === 'idle') {
-      dispatch(fetchPosts());
-    }
-  }, [postStatus, dispatch]);
-
-  /**
-   * TODO:
-   * 1. Once new posts with date are added, remove ? after date
-   */
-
-  const orderedPosts = [...posts]?.sort((a, b) => b.date?.localeCompare(a.date));
+  const orderedPosts = [...posts]?.sort((a, b) => b.createdAt.localeCompare(a.createdAt));
 
   return (
     <section className="mt-10">
-      {postStatus === 'loading' && <div>Loading posts...</div>}
-      {postStatus === 'error' && <div>Some error occurred! Please retry!</div>}
-      {postStatus === 'fulfilled' && (orderedPosts.length !== 0 && orderedPosts[0] !== undefined ? orderedPosts.map((post) => <PostCard key={post.id} post={post} />) : <div>No posts yet</div>)}
+      {status === 'loading' && <div>Loading posts...</div>}
+      {status === 'error' && <div>{error}</div>}
+      {status === 'fulfilled' && (orderedPosts.length !== 0 && orderedPosts[0] !== undefined ? orderedPosts.map((post) => <PostCard key={post._id} post={post} />) : <div className="text-2xl">No posts yet</div>)}
     </section>
   );
 };

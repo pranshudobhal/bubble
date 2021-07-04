@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { client } from '../../api/client';
 import { fetchUserService } from '../../services/users/User.services';
 
 const initialState = {
@@ -8,31 +7,28 @@ const initialState = {
   error: null,
 };
 
-export const fetchUsers = createAsyncThunk('users/fetchUsers', async () => {
-  try {
-    const response = await client.get('/fakeApi/users');
-    return response.users;
-  } catch (error) {
-    console.log(error);
-  }
-});
-
 export const fetchUserByUsername = createAsyncThunk('users/fetchUserByUsername', async (username) => {
   const response = await fetchUserService(username);
-  console.log({ response });
+  if (response.data.success === false) {
+    throw new Error(response.data.message);
+  }
   return response.data.user;
 });
 
 const usersSlice = createSlice({
   name: 'users',
   initialState,
-  reducers: {},
-  extraReducers: {
-    [fetchUsers.fulfilled]: (state, action) => {
-      return action.payload;
+  reducers: {
+    resetUser: () => {
+      return {
+        ...initialState,
+      };
     },
+  },
+  extraReducers: {
     [fetchUserByUsername.pending]: (state) => {
       state.status = 'loading';
+      state.error = null;
     },
     [fetchUserByUsername.fulfilled]: (state, action) => {
       state.status = 'fulfilled';
@@ -45,8 +41,5 @@ const usersSlice = createSlice({
   },
 });
 
+export const { resetUser } = usersSlice.actions;
 export default usersSlice.reducer;
-
-// export const selectAllUsers = (state) => state.users;
-
-// export const selectUserByUsername = (state, username) => state.users.find((user) => user.username === username);

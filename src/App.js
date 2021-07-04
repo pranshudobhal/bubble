@@ -6,16 +6,24 @@ import { PrivateRoute } from './features/authentication/PrivateRoute';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAxiosHeader } from './utils/setAxiosHeader';
 import { setAxiosErrorHandler } from './utils/setAxiosErrorHandler';
+import { fetchPosts } from './features/posts/postsSlice';
 
 function App() {
   const { token } = useSelector((state) => state.authentication);
   token && setAxiosHeader(token);
+  const postStatus = useSelector((state) => state.posts.status);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     setAxiosErrorHandler(dispatch);
   }, [dispatch, token]);
+
+  useEffect(() => {
+    if (token && postStatus === 'idle') {
+      dispatch(fetchPosts());
+    }
+  }, [postStatus, dispatch, token]);
 
   return (
     <>
@@ -25,10 +33,7 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <PrivateRoute path="/" element={<Home />} />
         <PrivateRoute path="/posts/:postID" element={<SinglePostPage />} />
-        {/* <PrivateRoute path="/profile" element={<UserList />} /> */}
         <PrivateRoute path="/:username" element={<UserPage />} />
-
-        {/* <Route path="/profile" element={<Profile />} /> */}
       </Routes>
     </>
   );

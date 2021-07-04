@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { createNewPost } from './postsSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { addNewPost } from './postsSlice';
 
 /**
  * TODO:
@@ -9,21 +9,17 @@ import { createNewPost } from './postsSlice';
 
 export const NewPost = () => {
   const [content, setContent] = useState('');
+  const {
+    user: { userID },
+  } = useSelector((state) => state.authentication);
 
   const dispatch = useDispatch();
 
   const onContentChanged = (e) => setContent(e.target.value);
 
   const onNewPostClicked = () => {
-    //UserID will come from the user who is logged in
-    /**
-     * FIXME:
-     * userID will change so will give ID of undefined error
-     */
-    const userID = 'cHLFomHWQk9XXGv4SPZm9';
     if (content !== '') {
-      dispatch(createNewPost({ content, userID }));
-
+      dispatch(addNewPost({ userID, content }));
       setContent('');
     }
   };
