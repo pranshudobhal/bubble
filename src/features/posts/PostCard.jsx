@@ -5,11 +5,6 @@ import { TrashIcon } from '@heroicons/react/outline';
 import { useDispatch, useSelector } from 'react-redux';
 import { deletePost } from './postsSlice';
 
-/**
- * TODO:
- * - If user is the one who posted, show delete button, otherwise dont
- */
-
 export const PostCard = ({ post }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();

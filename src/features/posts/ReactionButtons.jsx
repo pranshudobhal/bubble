@@ -14,7 +14,7 @@ export const ReactionButtons = ({ post }) => {
   const { userID } = useSelector((state) => state.authentication.user);
 
   const reactionButtons = Object.entries(reactionEmoji).map(([name, emoji]) => {
-    const isEmojiAlreadySelected = post.reactions[name].find((user) => user === post.userID._id);
+    const isEmojiAlreadySelected = post.reactions[name].find((user) => user === userID);
 
     return (
       <button
