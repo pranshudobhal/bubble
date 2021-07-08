@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router';
 import { TimeAgo } from './TimeAgo';
 
 export const PostAuthor = ({ post }) => {
-  const { firstName, lastName, username, profileImageURL } = post.userID;
+  const { firstName, lastName, username, profileImageURL } = post.user;
   const navigate = useNavigate();
 
   return (

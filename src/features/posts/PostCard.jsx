@@ -9,20 +9,20 @@ export const PostCard = ({ post }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const state = useLocation();
-  const { userID } = useSelector((state) => state.authentication.user);
+  const loggedInUser = useSelector((state) => state.authentication.user);
 
   const deletePostHandler = (postID) => {
     dispatch(deletePost(postID));
   };
 
   return (
-    <div className="bg-white cursor-pointer border border-gray-200 rounded-xl p-8 mb-6 shadow-md" onClick={() => navigate(`/posts/${post._id}`)}>
+    <div className="bg-white cursor-pointer border border-gray-200 rounded-lg p-8 mb-6 shadow-md" onClick={() => navigate(`/posts/${post._id}`)}>
       <div className="flex flex-col">
         <div className="flex justify-between items-start" onClick={(e) => e.stopPropagation()}>
           <div className="self-start">
             <PostAuthor post={post} />
           </div>
-          {userID === post.userID._id && state.pathname !== `/posts/${post._id}` && (
+          {loggedInUser._id === post.user._id && state.pathname !== `/posts/${post._id}` && (
             <div onClick={() => deletePostHandler(post._id)}>
               <TrashIcon className="h-5 w-5 text-gray-500 cursor-pointer" />
             </div>

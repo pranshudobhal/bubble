@@ -51,7 +51,7 @@ export const reactionRemoved = createAsyncThunk('posts/reactionRemoved', async (
   return response.data;
 });
 
-export const selectPostByUser = createSelector([selectAllPosts, (state, username) => username], (posts, username) => posts.filter((post) => post.userID.username === username));
+export const selectPostByUser = createSelector([selectAllPosts, (state, username) => username], (posts, username) => posts.filter((post) => post.user.username === username));
 
 const postSlice = createSlice({
   name: 'posts',

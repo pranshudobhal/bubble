@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { loginService, signUpService } from '../../services/authentication';
+import { followButtonClickedService, unFollowButtonClickedService } from '../../services/users/User.services';
 
 export const loginUser = createAsyncThunk('authentication/loginUser', async (userDetails) => {
   const response = await loginService(userDetails);
@@ -10,6 +11,22 @@ export const loginUser = createAsyncThunk('authentication/loginUser', async (use
 export const signUpUser = createAsyncThunk('authentication/signUpUser', async (userDetails) => {
   const response = await signUpService(userDetails);
   return { token: response.data.token, user: response.data.userData };
+});
+
+export const followButtonClicked = createAsyncThunk('authentication/followButtonClicked', async (userToFollowID) => {
+  const response = await followButtonClickedService(userToFollowID);
+  if (response.data.success === false) {
+    throw new Error(response.data.message);
+  }
+  return response.data.followedUserData;
+});
+
+export const unFollowButtonClicked = createAsyncThunk('authentication/unFollowButtonClicked', async (userToUnfollowID) => {
+  const response = await unFollowButtonClickedService(userToUnfollowID);
+  if (response.data.success === false) {
+    throw new Error(response.data.message);
+  }
+  return response.data.unfollowedUserData;
 });
 
 const initialState = {
@@ -68,6 +85,23 @@ export const authenticationSlice = createSlice({
       axios.defaults.headers.common['Authorization'] = token;
     },
     [signUpUser.rejected]: (state, action) => {
+      state.error = action.error.message;
+      state.status = 'error';
+    },
+    [followButtonClicked.fulfilled]: (state, action) => {
+      state.status = 'fulfilled';
+      state.user.following.push(action.payload);
+    },
+    [followButtonClicked.rejected]: (state, action) => {
+      state.error = action.error.message;
+      state.status = 'error';
+    },
+    [unFollowButtonClicked.fulfilled]: (state, action) => {
+      state.status = 'fulfilled';
+      const updatedUserFollowing = state.user.following.filter((user) => user._id !== action.payload._id);
+      state.user.following = updatedUserFollowing;
+    },
+    [unFollowButtonClicked.rejected]: (state, action) => {
       state.error = action.error.message;
       state.status = 'error';
     },
