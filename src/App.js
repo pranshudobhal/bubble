@@ -7,11 +7,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setAxiosHeader } from './utils/setAxiosHeader';
 import { setAxiosErrorHandler } from './utils/setAxiosErrorHandler';
 import { fetchPosts } from './features/posts/postsSlice';
+import { fetchAllUsers } from './features/search/searchSlice';
+import { initializeLoggedInUser } from './features/authentication/authenticationSlice';
 
 function App() {
-  const { token } = useSelector((state) => state.authentication);
+  const { status, token } = useSelector((state) => state.authentication);
   token && setAxiosHeader(token);
   const postStatus = useSelector((state) => state.posts.status);
+  const searchUserStatus = useSelector((state) => state.search.status);
 
   const dispatch = useDispatch();
 
@@ -20,10 +23,22 @@ function App() {
   }, [dispatch, token]);
 
   useEffect(() => {
+    if (token && status === 'idle') {
+      dispatch(initializeLoggedInUser());
+    }
+  }, [status, dispatch, token]);
+
+  useEffect(() => {
     if (token && postStatus === 'idle') {
       dispatch(fetchPosts());
     }
   }, [postStatus, dispatch, token]);
+
+  useEffect(() => {
+    if (token && searchUserStatus === 'idle') {
+      dispatch(fetchAllUsers());
+    }
+  }, [searchUserStatus, dispatch, token]);
 
   return (
     <>

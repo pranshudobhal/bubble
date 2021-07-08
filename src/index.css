@@ -15,6 +15,24 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.suggestions::-webkit-scrollbar {
+  width: 0.4rem;
+  height: 0.4rem;
+}
+
+.suggestions::-webkit-scrollbar-thumb {
+  background-color: #9b9b9b;
+  border-radius: 20px;
+}
+
+.suggestions::-webkit-scrollbar-thumb:hover {
+  background-color: #7c7a7a;
+}
+
+.suggestions::-webkit-scrollbar-track {
+  background: transparent;
+}
+
 .modal {
   -ms-overflow-style: none; /* for Internet Explorer, Edge */
   scrollbar-width: none; /* for Firefox */

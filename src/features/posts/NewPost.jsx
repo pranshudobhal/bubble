@@ -10,9 +10,11 @@ export const NewPost = () => {
   const postStatus = useSelector((state) => state.posts.status);
   const dispatch = useDispatch();
   const onContentChanged = (e) => setContent(e.target.value);
+  const isNewPostButtonDisabled = postStatus !== 'loading' && content.trim() === '';
 
   const onNewPostClicked = () => {
-    if (content !== '' && postStatus !== 'loading') {
+    const trimmedContent = content.trim();
+    if (trimmedContent !== '' && postStatus !== 'loading') {
       dispatch(addNewPost({ userID, content }));
       setContent('');
     }
@@ -22,7 +24,7 @@ export const NewPost = () => {
     <section className="border border-gray-200 rounded-lg p-6 shadow-md bg-white">
       <form className="flex flex-col">
         <textarea className="h-20 mb-2 border-0 rounded resize-none" id="postContent" name="postContent" placeholder="What's happening?" value={content} onChange={onContentChanged} />
-        <button type="button" className="bg-blue-500 text-white rounded-lg w-max py-2 px-6 mt-2 self-end disabled:opacity-50" onClick={onNewPostClicked} disabled={postStatus !== 'loading' ? false : true}>
+        <button type="button" className="bg-blue-500 text-white rounded-lg w-max py-2 px-6 mt-2 self-end disabled:opacity-50" onClick={onNewPostClicked} disabled={isNewPostButtonDisabled}>
           New Post
         </button>
       </form>

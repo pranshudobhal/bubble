@@ -10,7 +10,7 @@ export const TimeAgo = ({ timestamp }) => {
   }
 
   return (
-    <span className="text-sm text-gray-500 text-opacity-75">
+    <span className="text-sm text-gray-500 text-opacity-75 w-full">
       <i>{timeAgo}</i>
     </span>
   );

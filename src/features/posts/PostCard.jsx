@@ -19,11 +19,11 @@ export const PostCard = ({ post }) => {
     <div className="bg-white cursor-pointer border border-gray-200 rounded-lg p-8 mb-6 shadow-md" onClick={() => navigate(`/posts/${post._id}`)}>
       <div className="flex flex-col">
         <div className="flex justify-between items-start" onClick={(e) => e.stopPropagation()}>
-          <div className="self-start">
+          <div className="self-start mr-2">
             <PostAuthor post={post} />
           </div>
-          {loggedInUser._id === post.user._id && state.pathname !== `/posts/${post._id}` && (
-            <div onClick={() => deletePostHandler(post._id)}>
+          {loggedInUser._id === post.user._id && state.pathname !== `/posts/${post._id}` && state.pathname !== '/' && (
+            <div onClick={() => deletePostHandler(post._id)} className="self-center">
               <TrashIcon className="h-5 w-5 text-gray-500 cursor-pointer" />
             </div>
           )}

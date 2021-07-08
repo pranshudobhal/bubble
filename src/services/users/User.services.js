@@ -12,3 +12,7 @@ export const followButtonClickedService = async (userToFollowID) => {
 export const unFollowButtonClickedService = async (userToUnfollowID) => {
   return axios.delete(`${API_URL}/user/follow/${userToUnfollowID}`);
 };
+
+export const initializeLoggedInUserService = async () => {
+  return axios.get(`${API_URL}/user`);
+};

@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { loginService, signUpService } from '../../services/authentication';
-import { followButtonClickedService, unFollowButtonClickedService } from '../../services/users/User.services';
+import { followButtonClickedService, initializeLoggedInUserService, unFollowButtonClickedService } from '../../services/users/User.services';
 
 export const loginUser = createAsyncThunk('authentication/loginUser', async (userDetails) => {
   const response = await loginService(userDetails);
@@ -27,6 +27,11 @@ export const unFollowButtonClicked = createAsyncThunk('authentication/unFollowBu
     throw new Error(response.data.message);
   }
   return response.data.unfollowedUserData;
+});
+
+export const initializeLoggedInUser = createAsyncThunk('authentication/initializeLoggedInUser', async () => {
+  const response = await initializeLoggedInUserService();
+  return response.data.loggedInUser;
 });
 
 const initialState = {
@@ -102,6 +107,18 @@ export const authenticationSlice = createSlice({
       state.user.following = updatedUserFollowing;
     },
     [unFollowButtonClicked.rejected]: (state, action) => {
+      state.error = action.error.message;
+      state.status = 'error';
+    },
+    [initializeLoggedInUser.pending]: (state, action) => {
+      state.error = null;
+      state.status = 'loading';
+    },
+    [initializeLoggedInUser.fulfilled]: (state, action) => {
+      state.status = 'fulfilled';
+      state.user = action.payload;
+    },
+    [initializeLoggedInUser.rejected]: (state, action) => {
       state.error = action.error.message;
       state.status = 'error';
     },

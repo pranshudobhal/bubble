@@ -29,7 +29,7 @@ export const ReactionButtons = ({ post }) => {
   });
 
   return (
-    <div onClick={(e) => e.stopPropagation()} className="w-max ml-2">
+    <div onClick={(e) => e.stopPropagation()} className="w-full ml-2">
       {reactionButtons}
     </div>
   );

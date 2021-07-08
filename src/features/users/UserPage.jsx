@@ -6,7 +6,7 @@ import { PostCard } from '../posts/PostCard';
 import { useEffect, useState } from 'react';
 import { fetchUserByUsername, resetUser } from './usersSlice';
 import { Modal } from './Modal';
-import { followButtonClicked, unFollowButtonClicked } from '../authentication/authenticationSlice';
+import { followButtonClicked, logoutUser, unFollowButtonClicked } from '../authentication/authenticationSlice';
 
 export const UserPage = () => {
   const { username } = useParams();
@@ -30,6 +30,10 @@ export const UserPage = () => {
     }
   };
 
+  const logoutHandler = () => {
+    dispatch(logoutUser());
+  };
+
   useEffect(() => {
     dispatch(fetchUserByUsername(username));
   }, [dispatch, username, loggedInUser.following.length, loggedInUser.followers.length]);
@@ -50,8 +54,13 @@ export const UserPage = () => {
             <div className="flex justify-between items-center">
               <img src={user.profileImageURL} className="rounded-full h-40 w-40 object-cover object-center" alt="userimage" />
               {loggedInUser.username !== username && (
-                <button className="rounded-lg bg-blue-600 hover:bg-opacity-80 text-white font-semibold py-3 px-12 mr-4" onClick={() => followUnfollowHandler(user._id)}>
+                <button className="rounded-lg bg-blue-600 hover:bg-opacity-80 text-white font-semibold py-3 px-12 mr-2 sm:mr-4" onClick={() => followUnfollowHandler(user._id)}>
                   {isUserFollowed ? 'Unfollow' : 'Follow'}
+                </button>
+              )}
+              {loggedInUser.username === username && (
+                <button className="rounded-lg bg-blue-600 hover:bg-opacity-80 text-white font-semibold py-3 px-12 mr-2 sm:mr-4" onClick={logoutHandler}>
+                  Logout
                 </button>
               )}
             </div>
