@@ -1,4 +1,4 @@
-# [Bubble - A Social Media App](https://bubble-mu.vercel.app/)
+# [Bubble](https://bubble-mu.vercel.app/)
 
 An easy-to-use social media app to connect with your friends and loved ones! 😀
 
