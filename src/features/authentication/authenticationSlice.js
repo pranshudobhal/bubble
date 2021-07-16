@@ -48,12 +48,6 @@ export const authenticationSlice = createSlice({
     logoutUser: () => {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
-      return {
-        user: null,
-        token: null,
-        status: 'idle',
-        error: 'null',
-      };
     },
     resetAuthStateStatus: (state) => {
       state.status = 'idle';
