@@ -37,7 +37,3 @@ $ npm install
 - **Website** - [Pranshu Dobhal](https://pranshudobhal.netlify.app/)
 - **Twitter** - [@pranshu_dobhal](https://twitter.com/pranshu_dobhal)
 - **LinkedIn** - [pranshudobhal](https://www.linkedin.com/in/pranshudobhal/)
-
-## **Acknowledgments**
-
-A big thanks to my mentor **[Tanay Pratap](https://twitter.com/tanaypratap)** for inspiring me and making me break my limits and also to my fellow **[NeoGrammers](https://twitter.com/neogcamp)** who supported and helped me throughout.😀
