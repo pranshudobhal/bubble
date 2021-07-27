@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router';
-
 import { LockClosedIcon } from '@heroicons/react/solid';
 import { ExclamationCircleIcon } from '@heroicons/react/outline';
 import { useEffect, useState } from 'react';
@@ -28,7 +27,7 @@ export function Login() {
       <div className="max-w-md w-full space-y-8">
         <div>
           <img className="mx-auto h-12 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg" alt="Workflow" />
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Sign in to Bubble</h2>
+          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Login to Bubble</h2>
           <p className="mt-2 text-center text-sm text-gray-600">
             Or{' '}
             <span onClick={() => navigate('/signup')} className="cursor-pointer font-medium text-indigo-600 hover:text-indigo-500 inline-block">
@@ -78,23 +77,7 @@ export function Login() {
               className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-500 focus:outline-none focus:ring"
             />
           </div>
-
-          <div className="flex items-center justify-between mt-6">
-            <div className="flex items-center">
-              <input id="remember_me" name="remember_me" type="checkbox" className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded" />
-              <label htmlFor="remember_me" className="ml-2 block text-sm text-gray-900">
-                Remember me
-              </label>
-            </div>
-
-            <div className="text-sm">
-              <a href="/" className="font-medium text-indigo-600 hover:text-indigo-500">
-                Forgot your password?
-              </a>
-            </div>
-          </div>
-
-          <div className="mt-6">
+          <div className="mt-10">
             <button
               type="submit"
               onClick={() => loginHandler()}
@@ -103,8 +86,19 @@ export function Login() {
               <span className="absolute left-0 inset-y-0 flex items-center pl-3">
                 <LockClosedIcon className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" aria-hidden="true" />
               </span>
-              {status === 'loading' ? 'Signing In' : 'Sign in'}
+              {status === 'loading' ? 'Logging In' : 'Login'}
             </button>
+          </div>
+          <div className="my-3 text-center">
+            <span
+              onClick={() => {
+                setUserNameOrEmail('test@gmail.com');
+                setPassword('test');
+              }}
+              className="cursor-pointer text-md font-medium rounded-md text-indigo-500 hover:text-indigo-700"
+            >
+              Use guest credentials
+            </span>
           </div>
         </form>
       </div>

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { fetchAllUsersService } from '../../services/search/Search.services';
+import { fetchAllUsersService } from '../../services';
 
 const initialState = {
   status: 'idle',

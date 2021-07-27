@@ -1,7 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-import { BellIcon } from '@heroicons/react/outline';
+// import { BellIcon } from '@heroicons/react/outline';
 import { useSelector } from 'react-redux';
 import { Search } from '../search/Search';
+import Avatar from 'react-avatar';
 
 export const Navbar = () => {
   const navigate = useNavigate();
@@ -22,8 +23,9 @@ export const Navbar = () => {
           <Search />
         </div>
         <div className="navContent flex justify-between items-center gap-x-1.5 md:gap-x-4">
-          <BellIcon className="h-6 w-6 text-gray-500 cursor-pointer" />
-          <img src={user.profileImageURL} className="rounded-full h-10 w-10 object-cover object-center cursor-pointer" alt="userimage" onClick={() => navigate(`/${user.username}`)} />
+          {/* <BellIcon className="h-6 w-6 text-gray-500 cursor-pointer" /> */}
+          <Avatar name={user.firstName + ' ' + user.lastName} size="40" className="rounded-full h-10 w-10 object-cover object-center cursor-pointer" alt={user.firstName} onClick={() => navigate(`/${user.username}`)} />
+          {/* <img src={user.profileImageURL} className="rounded-full h-10 w-10 object-cover object-center cursor-pointer" alt="userimage" onClick={() => navigate(`/${user.username}`)} /> */}
         </div>
       </div>
     </nav>

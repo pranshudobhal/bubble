@@ -130,6 +130,17 @@ export function SignUp() {
               {status === 'loading' ? 'Signing Up' : 'Sign up'}
             </button>
           </div>
+          <div className="my-3 text-center">
+            Already a user?{' '}
+            <span
+              onClick={() => {
+                navigate('/login');
+              }}
+              className="cursor-pointer text-md font-medium rounded-md text-indigo-500 hover:text-indigo-700"
+            >
+              Login
+            </span>
+          </div>
         </form>
       </div>
     </div>

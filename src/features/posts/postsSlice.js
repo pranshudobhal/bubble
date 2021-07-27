@@ -1,5 +1,5 @@
-import { createAsyncThunk, createSelector, createSlice } from '@reduxjs/toolkit';
-import { createNewPostService, deletePostService, getAllPostsService, reactionAddedService, reactionRemovedService } from '../../services/posts/Posts.services';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createNewPostService, deletePostService, getAllPostsService, reactionAddedService, reactionRemovedService } from '../../services';
 
 const initialState = {
   posts: [],
@@ -50,8 +50,6 @@ export const reactionRemoved = createAsyncThunk('posts/reactionRemoved', async (
   }
   return response.data;
 });
-
-export const selectPostByUser = createSelector([selectAllPosts, (state, username) => username], (posts, username) => posts.filter((post) => post.user.username === username));
 
 const postSlice = createSlice({
   name: 'posts',

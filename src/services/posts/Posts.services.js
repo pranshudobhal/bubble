@@ -5,6 +5,10 @@ export const getAllPostsService = async () => {
   return axios.get(`${API_URL}/post`);
 };
 
+export const fetchPostsByUsernameService = async (username) => {
+  return axios.get(`${API_URL}/post/${username}`);
+};
+
 export const createNewPostService = async (newPost) => {
   return axios.post(`${API_URL}/post`, newPost);
 };

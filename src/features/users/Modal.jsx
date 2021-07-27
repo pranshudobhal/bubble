@@ -1,4 +1,5 @@
 import { XIcon } from '@heroicons/react/solid';
+import Avatar from 'react-avatar';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { unFollowButtonClicked } from '../authentication/authenticationSlice';
@@ -32,7 +33,8 @@ export const Modal = ({ setShowModal, heading, content, error }) => {
                             navigate(`/${user.username}`);
                           }}
                         >
-                          <img src={user.profileImageURL} className="rounded-full h-12 w-12 object-cover object-center" alt="userimage" />
+                          <Avatar name={user.firstName + ' ' + user.lastName} size="48" className="rounded-full h-12 w-12 object-cover object-center cursor-pointer" alt={user.firstName} onClick={() => navigate(`/${user.username}`)} />
+                          {/* <img src={user.profileImageURL} className="rounded-full h-12 w-12 object-cover object-center" alt="userimage" /> */}
                         </div>
                         <div className="text-black font-semibold text-md flex flex-col flex-1 truncate">
                           <span

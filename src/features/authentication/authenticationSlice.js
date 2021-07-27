@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { loginService, signUpService } from '../../services/authentication';
-import { followButtonClickedService, initializeLoggedInUserService, unFollowButtonClickedService } from '../../services/users/User.services';
+import { loginService, signUpService } from '../../services';
+import { followButtonClickedService, initializeLoggedInUserService, unFollowButtonClickedService } from '../../services';
 
 export const loginUser = createAsyncThunk('authentication/loginUser', async (userDetails) => {
   const response = await loginService(userDetails);

@@ -1,9 +1,10 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { fetchUserService } from '../../services/users/User.services';
+import { fetchPostsByUsernameService, fetchUserService } from '../../services';
 
 const initialState = {
   status: 'idle',
   user: null,
+  posts: [],
   error: null,
 };
 
@@ -13,6 +14,14 @@ export const fetchUserByUsername = createAsyncThunk('users/fetchUserByUsername',
     throw new Error(response.data.message);
   }
   return response.data.user;
+});
+
+export const fetchPostsByUsername = createAsyncThunk('users/fetchPostsByUsername', async (username) => {
+  const response = await fetchPostsByUsernameService(username);
+  if (response.data.success === false) {
+    throw new Error(response.data.message);
+  }
+  return response.data.allUserPosts;
 });
 
 const usersSlice = createSlice({
@@ -37,6 +46,10 @@ const usersSlice = createSlice({
     [fetchUserByUsername.rejected]: (state, action) => {
       state.error = action.error.message;
       state.status = 'error';
+    },
+    [fetchPostsByUsername.fulfilled]: (state, action) => {
+      state.status = 'fulfilled';
+      state.posts = state.posts.concat(action.payload);
     },
   },
 });

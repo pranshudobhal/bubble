@@ -1,3 +1,4 @@
+import Avatar from 'react-avatar';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 
@@ -19,7 +20,8 @@ export const UserSuggestion = () => {
             user.username !== loggedInUser.username && (
               <div className="bg-white overflow-hidden shadow-lg rounded-lg mr-6 min-w-15" key={user.username}>
                 <div className="text-center p-6 border-b">
-                  <img className="h-24 w-24 rounded-full mx-auto cursor-pointer" src={user.profileImageURL} alt={user.firstName} onClick={() => navigate(`/${user.username}`)} />
+                  <Avatar name={user.firstName + ' ' + user.lastName} size="96" className="rounded-full h-24 w-24 object-cover object-center cursor-pointer mx-auto" alt={user.firstName} onClick={() => navigate(`/${user.username}`)} />
+                  {/* <img className="h-24 w-24 rounded-full mx-auto cursor-pointer" src={user.profileImageURL} alt={user.firstName} onClick={() => navigate(`/${user.username}`)} /> */}
                   <p className="pt-2 text-lg font-semibold cursor-pointer" onClick={() => navigate(`/${user.username}`)}>
                     {user.firstName + ' ' + user.lastName}
                   </p>

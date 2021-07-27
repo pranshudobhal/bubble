@@ -1,5 +1,6 @@
 import { SearchIcon } from '@heroicons/react/outline';
 import { useState } from 'react';
+import Avatar from 'react-avatar';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 
@@ -60,7 +61,8 @@ export const Search = () => {
                               setSearchedWord('');
                             }}
                           >
-                            <img src={user.profileImageURL} className="rounded-full h-12 w-12 object-cover object-center" alt="userimage" />
+                            <Avatar name={user.firstName + ' ' + user.lastName} size="48" className="rounded-full h-12 w-12 object-cover object-center cursor-pointer" alt={user.firstName} />
+                            {/* <img src={user.profileImageURL} className="rounded-full h-12 w-12 object-cover object-center" alt="userimage" /> */}
                           </div>
                           <div className="text-black font-semibold text-md flex flex-col flex-1 truncate">
                             <span
