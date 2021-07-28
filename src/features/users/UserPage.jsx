@@ -6,6 +6,7 @@ import { fetchPostsByUsername, fetchUserByUsername, resetUser } from './usersSli
 import { Modal } from './Modal';
 import { followButtonClicked, logoutUser, unFollowButtonClicked } from '../authentication/authenticationSlice';
 import Avatar from 'react-avatar';
+import { selectPostByUser } from '../posts/postsSlice';
 
 export const UserPage = () => {
   const { username } = useParams();
@@ -17,7 +18,12 @@ export const UserPage = () => {
   const [showFollowersModal, setShowFollowersModal] = useState(false);
   const [showFollowingModal, setShowFollowingModal] = useState(false);
 
-  const orderedPosts = [...postsByUser]?.sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+  let orderedPosts;
+  if (loggedInUser.username !== username) {
+    orderedPosts = [...postsByUser]?.sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+  }
+  const postByLoggedInUser = useSelector((state) => selectPostByUser(state, username));
+  orderedPosts = [...postByLoggedInUser]?.sort((a, b) => b.createdAt.localeCompare(a.createdAt));
 
   const followUnfollowHandler = (userToFollowID) => {
     if (isUserFollowed) {
@@ -33,8 +39,8 @@ export const UserPage = () => {
 
   useEffect(() => {
     dispatch(fetchUserByUsername(username));
-    dispatch(fetchPostsByUsername(username));
-  }, [dispatch, username, loggedInUser.following.length, loggedInUser.followers.length]);
+    loggedInUser.username !== username && dispatch(fetchPostsByUsername(username));
+  }, [dispatch, username, loggedInUser.following.length, loggedInUser.followers.length, loggedInUser.username]);
 
   useEffect(() => {
     return () => {
