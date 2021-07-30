@@ -79,6 +79,9 @@ const postSlice = createSlice({
       state.status = 'error';
       state.error = action.error.message;
     },
+    [addNewPost.pending]: (state) => {
+      state.status = 'loading';
+    },
     [addNewPost.fulfilled]: (state, action) => {
       state.posts.push(action.payload);
       state.status = 'fulfilled';
